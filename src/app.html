@@ -4,9 +4,53 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
+		<style>
+			:root {
+				--menu-bkg-color: #42A5F5;
+				--menu-text-color: white;
+				--bkg-color: cornsilk;
+				--text-color: black;
+				}
+			* {
+				box-sizing: border-box;
+				}
+			html, body {
+				height: 100vh;
+				width: 100vw;
+				margin: 0;
+				padding: 0
+				}
+			body {
+				font: 15px sans-serif;
+				display: grid;
+				grid-template-areas:
+					"left top    right"
+					"left menu   right"
+					"left middle right"
+					"left bottom right"
+					;
+				grid-template-rows: auto auto 1fr auto;
+				}
+
+			/* NOTE: Using a CSS variable in place of '800px' doesn't work */
+
+			@media (max-width: 800px) {
+				body {
+					grid-template-columns: 0 100% 0;
+					}
+				}
+
+			@media (min-width: 800px) {
+				body {
+					grid-template-columns: 1fr 800px 1fr;
+					}
+				}
+		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<div id="svelte" style="display: contents">
+			%sveltekit.body%
+		</div>
 	</body>
 </html>
