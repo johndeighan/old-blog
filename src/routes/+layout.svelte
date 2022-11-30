@@ -10,7 +10,7 @@
 </main>
 
 <footer>
-	Programmed by John Deighan
+	This is the footer
 </footer>
 
 <style>
@@ -21,7 +21,6 @@
 		background-color: var(--bkg-color);
 		color: var(--text-color);
 		}
-
 	nav, footer {
 		background-color: var(--menu-bkg-color);
 		color: var(--menu-text-color);
@@ -29,7 +28,6 @@
 		margin: 0;
 		padding: 3px;
 		}
-
 	nav {
 		grid-area: top;
 		}
@@ -41,7 +39,6 @@
 	nav a:hover {
 		color: white;
 		}
-
 	footer {
 		grid-area: bottom;
 		}
