@@ -26,14 +26,14 @@
 		color: var(--menu-text-color);
 		text-align: center;
 		margin: 0;
-		padding: 3px;
+		padding: 5px 0;
 		}
 	nav {
 		grid-area: top;
 		}
 	nav a {
 		text-decoration: none;
-		padding: 12px 14px;
+		padding: 0 8px;
 		display: inline-block;
 		}
 	nav a:hover {

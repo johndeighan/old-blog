@@ -1,14 +1,15 @@
 {
 	"name": "blog",
-	"version": "0.0.1",
-	"private": true,
+	"version": "1.0.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"deploy": "npm run build && surge ./build --domain https://jd-blog.surge.sh"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-static": "^1.0.0-next.48",
 		"@sveltejs/kit": "next",
 		"mdsvex": "^0.10.6",
 		"svelte": "^3.53.1",
