@@ -9,8 +9,8 @@
 			:root {
 				--bkg-color: GhostWhite;
 				--text-color: Black;
-				--menu-bkg-color: DeepSkyBlue;
-				--menu-text-color: White;
+				--menu-bkg-color: #09CABE;
+				--menu-text-color: Black;
 				}
 			* {
 				box-sizing: border-box;
@@ -26,24 +26,19 @@
 				display: grid;
 				grid-template-areas:
 					"left top    right"
-					"left menu   right"
 					"left middle right"
 					"left bottom right"
 					;
-				grid-template-rows: auto auto 1fr auto;
+				grid-template-rows: auto 1fr auto;
 				}
 
 			/* NOTE: Using a CSS variable in place of '800px' doesn't work */
 
 			@media (max-width: 800px) {
-				body {
-					grid-template-columns: 0 100% 0;
-					}
+				body {grid-template-columns: 0 100% 0;}
 				}
 			@media (min-width: 800px) {
-				body {
-					grid-template-columns: 1fr 800px 1fr;
-					}
+				body {grid-template-columns: 1fr 800px 1fr;}
 				}
 		</style>
 		%sveltekit.head%

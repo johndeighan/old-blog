@@ -2,7 +2,6 @@
 	<a href="/">Home</a>
 	<a href="/about">About</a>
 	<a href="/contact">Contact</a>
-	<a href="/posts">Blog Posts</a>
 </nav>
 
 <main>
@@ -10,7 +9,7 @@
 </main>
 
 <footer>
-	This is the footer
+	Built with SvelteKit!
 </footer>
 
 <style>
@@ -32,6 +31,7 @@
 		grid-area: top;
 		}
 	nav a {
+		color: var(--menu-text-color);
 		text-decoration: none;
 		padding: 0 8px;
 		display: inline-block;

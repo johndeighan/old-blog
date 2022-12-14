@@ -1,2 +1,2 @@
 <h1>About my blog</h1>
-<p>Learning SvelteKit</p>
+<p>I'm learning Svelte and SvelteKit</p>

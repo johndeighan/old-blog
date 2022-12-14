@@ -1,3 +1,14 @@
-<h1>My Home Page</h1>
+<h1>My Blog Posts</h1>
 
-<p>The middle row is where we’ll put our content. We’ve assigned it a size of 1fr which, again, just means it takes up all of the remaining space that’s left over from the other two rows. If you’re wondering why we aren’t making it auto as well, it’s because the entire grid spans the viewport’s whole height, so we need one section to grow and fill up any unused space. Note that we do not have, nor will we ever need at any point, any fixed heights, margins, paddings — or even line breaks! — to push things into place. Such is the good life when working with grid!</p>
+<BlogPost name='adding' label='How to add a new blog post'/>
+<BlogPost name='get-caller' label='get JavaScript call stack'/>
+<BlogPost name='how-to-build' label="How to build this site"/>
+<BlogPost name='cielo-to-do' label="Cielo To Do List"/>
+<BlogPost name='graph' label="A sample graph"/>
+<BlogPost name='jqplot' label="Graphing Data with jqPlot"/>
+<BlogPost name='css-variables' label="CSS variables"/>
+<BlogPost name='css-grid' label="CSS Grid"/>
+
+<script>
+	import BlogPost from './BlogPost.svelte'
+</script>
