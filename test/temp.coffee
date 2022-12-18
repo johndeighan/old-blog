@@ -1,10 +1,20 @@
 # temp.coffee
 
-import {scaleLinear} from 'd3-scale'
+import {getScaler} from './GraphLib.js';
 
-console.log "Hello, World!"
+hPlot = {
+	width: 700,
+	height: 300,
+	}
 
-xScale = scaleLinear().domain([0, 15]).range([0, 100])
+lPoints = [
+	[  0,   0, 'red'],    # lower left
+	[150, 150, 'blue'],   # mid point
+	[200, 200, 'green'],  # upper right
+	];
 
-result = xScale(5)
-console.log "scaled = #{result}"
+scaler = getScaler(hPlot.width, hPlot.height, lPoints);
+
+for pt in [[0,0],[50,50], [100,100], [150,150], [200,200]]
+	newpt = scaler(pt)
+	console.log "#{pt} => #{newpt}"

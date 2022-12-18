@@ -6,8 +6,7 @@ I created this **blog** mainly to allow me to document
 the projects that I'm working on. My main goals are:
 
 1. Learn SvelteKit
-2. Use Immer
-3. Learn CoffeeScript
+2. Learn CoffeeScript
 3. Create a web site for learning Chinese
 4. Develop a language to enhance CoffeeScript
 5. Develop a language to enhance Svelte
