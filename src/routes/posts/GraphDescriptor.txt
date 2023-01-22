@@ -1,0 +1,51 @@
+Graph Descriptor
+
+hSeries =
+	<name>: {
+		hOptions: {
+			xaxis: 'top' | 'bottom'
+			yaxis: 'left' | 'right'
+			ptColor: <color>
+			ptSize: <int>
+			lineColor: <color>
+			lineSize: <int>
+			}
+		lData: [
+			[x, y],
+			...etc.
+			]
+	...etc.
+
+Each of the 4 possible axes: top, left, bottom, right
+will get its own scaler based on the min/max values
+on that axis.
+
+e.g.
+
+hSeries =
+	---
+	USA:
+		hOptions:
+			xaxis: bottom
+			yaxis: left
+			ptColor: black
+			ptSize: 3
+			lineColor: black
+			lineSize: 2
+		lData:
+			- [1, 2]
+			- [3, 4]
+	China:
+		hOptions:
+			xaxis: bottom
+			yaxis: left
+			ptColor: red
+			ptSize: 3
+			lineColor: red
+			lineSize: 2
+		lData:
+			- [1, 2]
+			- [3, 4]
+
+
+

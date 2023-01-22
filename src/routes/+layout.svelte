@@ -1,23 +1,33 @@
-<section>
-	<nav>
-		<a href="/">Home</a>
-		<a href="/about">About</a>
-		<a href="/contact">Contact</a>
-	</nav>
+<svelte:head>
+	<title>My Blog</title>
+</svelte:head>
 
-	<main>
-	  <slot/>
-	</main>
+<nav>
+	<a href="/">Home</a>
+	<a href="/about">About</a>
+	<a href="/contact">Contact</a>
+</nav>
 
-	<footer>
-		<span>Built with SvelteKit!</span>
-	</footer>
-</section>
+<main>
+	<a id="top"></a>
+	<slot/>
+</main>
+
+<footer>
+	<span>Built with SvelteKit!</span>
+</footer>
 
 <style>
-	section {
+	:global(body) {
+		--bkg-color: GhostWhite;
+		--text-color: Black;
+		--menu-bkg-color: #09CABE;
+		--menu-text-color: Black;
+
 		height: 100vh;
 		width: 100vw;
+		margin: 0;
+		padding: 0;
 		font: 15px sans-serif;
 		display: grid;
 		grid-template-areas:
@@ -31,10 +41,14 @@
 	/* NOTE: Using a CSS variable in place of '800px' doesn't work */
 
 	@media (max-width: 800px) {
-		section {grid-template-columns: 0 100% 0;}
+		:global(body) {
+			grid-template-columns: 0 100% 0;
+			}
 		}
 	@media (min-width: 800px) {
-		section {grid-template-columns: 1fr 800px 1fr;}
+		:global(body) {
+			grid-template-columns: 1fr 800px 1fr;
+			}
 		}
 
 	nav {

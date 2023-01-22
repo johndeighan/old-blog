@@ -1,5 +1,5 @@
 {
-	"name": "blog",
+	"name": "@jdeighan/blog",
 	"version": "1.0.0",
 	"scripts": {
 		"build": "coffee -c . && cp ../README.md ./src/routes/posts/how-to-build/+page.md && vite build",

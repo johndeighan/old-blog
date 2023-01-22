@@ -12,3 +12,7 @@ Cielo To Do List
 	- allow specifying a general graph using graphviz syntax
 	- allow specifying a data graph as an svg
 	- display the graph in `<img src='output.svg'>`
+- implement a Playground component
+	- CieloPlayground
+	- StarbucksPlayground
+	- TurtlePlayground

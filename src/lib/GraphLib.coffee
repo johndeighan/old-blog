@@ -19,6 +19,12 @@ export getScaler = (lData, minOut, maxOut) =>
 
 # ---------------------------------------------------------------------------
 
+export getScalers = (hSeries, width, height) =>
+
+
+
+# ---------------------------------------------------------------------------
+
 export getPtScaler = (width, height, lPoints) =>
 
 	xScaler = getScaler(lPoints.map((x) => x[0]), 0, width)

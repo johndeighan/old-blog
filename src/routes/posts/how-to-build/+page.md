@@ -44,9 +44,6 @@ Edit the src/routes/+page.svelte file - it's your home page:
 
 Observe the immediate change to the web site
 
-[**Current State Saved in /blog-1**]
-==================================
-
 Add Pages
 ---------
 
@@ -275,10 +272,6 @@ Change the `<nav>` element of your src/routes/
 </nav>
 ```
 
-[**Current State Saved in /blog-2**]
-==================================
-
-
 Using markdown
 ==============
 
@@ -383,10 +376,6 @@ in your app.html file, add this to your `<head>` section:
 ```html
 <link rel="stylesheet" href="%sveltekit.assets%/markdown.css" />
 ```
-
-[**Current State Saved in /blog-3**]
-==================================
-
 
 Add a Blog Post
 ===============
@@ -542,9 +531,6 @@ simply execute:
 > npm run deploy
 ```
 
-[**Current State Saved in /blog-4**]
-==================================
-
 Create a svelte component
 =========================
 
@@ -675,7 +661,3 @@ file for the script `build`:
 ```js
 		"build": "cp ../README.md ./src/routes/posts/how-to-build/+page.svelte && vite build",
 ```
-
-[**Current State Saved in /blog-5**]
-==================================
-

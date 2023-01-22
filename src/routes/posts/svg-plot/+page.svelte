@@ -3,20 +3,20 @@
 <SVGPlot {hPlot} {lPoints} {scaler}/>
 
 <script>
+	import {getPtScaler} from './GraphLib.js';
 	import SVGPlot from './SVGPlot.svelte';
-	import {getScaler} from './GraphLib.js';
 
 	let width = 700;
 	let height = 300;
 	let hPlot = {width, height};
 
 	let lPoints = [
-		[  0,   0],    // lower left
+		[  0,   0],
 		[ 50,  50],
-		[100, 100],   // mid point
+		[100, 100],
 		[150, 150],
-		[200, 200],  // upper right
+		[200, 200],
 		];
 
-	let scaler = getScaler(width, height, lPoints);
+	let scaler = getPtScaler(width, height, lPoints);
 </script>

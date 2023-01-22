@@ -1,4 +1,6 @@
-<h1>Graphing Data with jqPlot</h1>
+<h1>Plotting Data with jqPlot</h1>
+
+<p>(if you don't see a graph, try refreshing the page)</p>
 
 <JQPlot title = "Monthly Revenue & Profit"
         {hSeries} {hX} {hY} {hY2}

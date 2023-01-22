@@ -31,6 +31,9 @@ export var getScaler = (lData, minOut, maxOut) => {
 };
 
 // ---------------------------------------------------------------------------
+export var getScalers = (hSeries, width, height) => {};
+
+// ---------------------------------------------------------------------------
 export var getPtScaler = (width, height, lPoints) => {
   var xScaler, yScaler;
   xScaler = getScaler(lPoints.map((x) => {
