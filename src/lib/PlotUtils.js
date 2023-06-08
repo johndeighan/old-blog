@@ -8,9 +8,8 @@ import {
 
 import {
   undef,
-  defined,
-  notdefined
-} from '@jdeighan/base-utils/utils';
+  defined
+} from '@jdeighan/base-utils';
 
 // ---------------------------------------------------------------------------
 export var getPlotOptions = (title, hSeries, hX, hY, hY2 = undef) => {

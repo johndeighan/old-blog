@@ -281,7 +281,7 @@ We'll enable using markdown, then I'll show how it's used.
 
 First, install the `mdsvex` package:
 
-``bash
+```bash
 $ npm install -D mdsvex
 ```
 
@@ -291,7 +291,7 @@ Next, modify your svelte.config.js file like so:
 import adapter from '@sveltejs/adapter-auto';
 import {mdsvex} from 'mdsvex';
 
-const config = {
+export default {
 	extensions: ['.svelte','.md'],
 	kit: {
 		adapter: adapter()
@@ -302,8 +302,6 @@ const config = {
 			})
 		],
 	};
-
-export default config;
 ```
 
 NOTE: Whenever you change your svelte.config.js file,
@@ -661,3 +659,15 @@ file for the script `build`:
 ```js
 		"build": "cp ../README.md ./src/routes/posts/how-to-build/+page.svelte && vite build",
 ```
+
+Math
+====
+
+```bash
+$ npm install mathlifier
+```
+
+Enable CoffeeScript
+===================
+
+Follow blog instructions

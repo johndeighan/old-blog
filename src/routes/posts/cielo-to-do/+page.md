@@ -16,3 +16,10 @@ Cielo To Do List
 	- CieloPlayground
 	- StarbucksPlayground
 	- TurtlePlayground
+- [better menus](https://www.youtube.com/watch?v=S-VeYcOCFZw&t=65s)
+- generic `<List/>` and `<Tree/>` components
+- [email only authentication](https://www.youtube.com/watch?v=b6qHfPdv4Y8&t=9s)
+- supabase
+- create svelte preprocessor from Mapper
+- rename files with leading _ to leading +
+

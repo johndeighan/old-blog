@@ -9,7 +9,7 @@
 </nav>
 
 <main>
-	<a id="top"></a>
+	<a id="top">&nbsp;</a>
 	<slot/>
 </main>
 

@@ -4,16 +4,6 @@ import {
   scaleLinear
 } from 'd3-scale';
 
-import {
-  undef,
-  defined
-} from '@jdeighan/base-utils';
-
-import {
-  isNumber
-} from '@jdeighan/base-utils/utils';
-
-// ---------------------------------------------------------------------------
 export var getScaler = (lData, minOut, maxOut) => {
   var i, len, maxData, minData, n;
   minData = Number.MAX_VALUE;

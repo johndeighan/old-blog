@@ -11,7 +11,7 @@ import {
 
 import {
   isNumber
-} from '@jdeighan/base-utils/utils';
+} from '@jdeighan/base-utils';
 
 // ---------------------------------------------------------------------------
 export var getScaler = (lData, minOut, maxOut) => {

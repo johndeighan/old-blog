@@ -10,7 +10,7 @@
 
 <script>
 	import {onMount} from 'svelte';
-	import {undef, nonEmpty} from '@jdeighan/base-utils/utils'
+	import {undef, nonEmpty} from '@jdeighan/base-utils'
 	import {getPlotOptions} from '$lib/PlotUtils.js';
 
 	export let title = "Title";

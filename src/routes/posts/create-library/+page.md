@@ -2,14 +2,14 @@ Create npm installable library
 ==============================
 
 Make sure `nodejs` and `git` are installed globally.
-Make sure the npm package `ava` is installed globally.
 
 ```bash
-$ mkdir newlib
-$ cd newlib
-$ mkdir src test
+$ mkdir <newlib>
+$ cd <newlib>
+$ mkdir src test src/bin src/lib
+$ git init
 $ npm init -y
-$ npm install -D coffeescript
+$ npm install -D coffeescript ava
 ```
 
 Change your `package.json` file to:
@@ -19,27 +19,28 @@ Change your `package.json` file to:
 	"name": "@jdeighan/newlib",
 	"version": "1.0.0",
 	"type": "module",
-	"description": "A collection of svelte preprocess functions",
+	"description": "A new library",
 	"engines": {
-		"node": ">=12.0.0"
-	},
+		"node": ">=18.0.0"
+		},
 	"exports": {
 		"./package.json": "./package.json"
-	},
+		},
 	"scripts": {
 		"build": "cls && coffee -c .",
 		"test": "npm run build && ava ./test/*.test.js && git status"
-	},
+		},
 	"keywords": [
 		"coffeescript",
-		"svelte"
-	],
+		"ava"
+		],
 	"author": "John Deighan",
 	"license": "MIT",
 	"devDependencies": {
+		"ava": "^5.2.0",
 		"coffeescript": "^2.7.0"
+		}
 	}
-}
 ```
 
 NOTE: In the 'name' field, I've pre-pended the name of my new
@@ -49,6 +50,16 @@ that the name will be unique). CoffeeScript should already be
 installed, so it will appear in the 'devDependencies' section,
 which you should NOT modify.
 
+Create file `.npmrc` (optional)
+--------------------
+
+```text
+engine-strict=true
+loglevel=silent
+```
+
+This will produce less output when you run scripts
+
 Add a library file
 ------------------
 
@@ -56,10 +67,10 @@ So far, we just have an empty library. Next, let's add a library
 file along with some unit tests and make it importable by
 users of the library.
 
-Add this file to the `src/` folder:
+Add this file to the `src/lib` folder:
 
 ```coffee
-# utils.coffee
+# newlib.coffee
 
 export centeredText = (text, width) =>
 
@@ -77,7 +88,7 @@ an export. Change the 'exports' section to:
 
 ```json
 	"exports": {
-		"./utils": "./src/utils.js",
+		".": "./src/lib/newlib.js",
 		"./package.json": "./package.json"
 	},
 ```
@@ -91,21 +102,14 @@ a corresponding unit test. Normally, if a library is named
 `newlib.coffee`, the corresponding unit test is named
 `newlib.test.coffee` and placed in the `test/` folder.
 
-We will use `ava` for unit testing, so next we need to
-install that package:
-
-```bash
-$ npm install -D ava
-```
-
-Then, add this unit test file, named `utils.test.coffee`
+Then, add this unit test file, named `newlib.test.coffee`
 to the `test/` folder:
 
 ```coffee
-# utils.test.coffee
+# newlib.test.coffee
 
 import test from 'ava'
-import {centeredText} from '@jdeighan/newlib/utils'
+import {centeredText} from '@jdeighan/newlib'
 
 test "center text", (t) =>
 	t.is(centeredText('hello', 11), '   hello   ')
@@ -122,14 +126,26 @@ You can now run your unit test with this command:
 $ npm run test
 ```
 
+Create a README.md file
+-----------------------
+
+Create the file `README.md` in your project folder. This is where
+you will document your library:
+
+```markdown
+How to use this library
+=======================
+
+This library provides these functions:
+
+centeredText(text, width) - Pads text on the left and right with
+	space characters to achieve the given width.
+```
+S
 Initialize Git in your folder
 -----------------------------
 
 Make sure that your project folder is the "current directory".
-
-```bash
-$ git init
-```
 
 Create a `.gitignore` file:
 
@@ -174,5 +190,5 @@ Publish the library to npm
 Then:
 
 ```bash
-$ npm publish
+$ npm publish --access=public
 ```

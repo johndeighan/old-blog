@@ -18,13 +18,23 @@ I prefer using a TAB character:
 	}
 ```
 
+Next, install some needed packages by executing:
+
 ```bash
-$ npm install -D vite svelte @sveltejs/kit @sveltejs/adapter-static
+$ npm install -D vite svelte @sveltejs/kit @sveltejs/adapter-auto @sveltejs/adapter-static
 ```
 
+You need to install an **adapter** to (eventually) deploy your app
+to the Internet. We've installed 2 common adapters here. You'll need
+to choose between them, though you can easily change it later.
+For now, just use this rule: if your app will require
+access to a database, you'll need to use `adapter-auto`. If, on the other
+hand, you use only data which is inside your app, you can use
+`apapter-static`, which will prerender all of your web pages, allowing
+the server on which you host your app to only serve static files.
+
 Your `package.json` file will now have a `devDependencies` section.
-It may be slightly different than the one below (mainly in version
-numbers). Do not modify anything in the `devDependencies` section, but
+Do not modify anything in the `devDependencies` section, but
 add these sections above the `devDependencies` section:
 
 ```json
@@ -79,12 +89,18 @@ export default {
 	};
 ```
 
-Install a favicon.ico or favicon.png file
+But you'll have to use the adapter that you chose above in
+the import statement.
+
+Install a favicon file
 -----------------------------------------
 
 Find one, then place it in the `static/` directory. The web site
-[here](URL 'https://www.favicon.cc/') will allow you to create a
-custom icon.
+[here](https://www.favicon.cc/) will allow you to create a
+custom icon. This is not absolutely necessary, but will prevent
+an error message in your browser's console when debugging. Note the
+file extension of the favicon - the file is commonly named `favicon.ico`,
+`favicon.png` or `favicon.svg`, but other extensions are possible.
 
 Create the file `src/app.html`
 ------------------------------
@@ -100,16 +116,16 @@ Put it in your `src/` directory:
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
-		%sveltekit.body%
+	<body>
+		<div>
+			%sveltekit.body%
+		</div>
 	</body>
 </html>
 ```
 
-Make sure that the favicon file extension in this file matches the
-one in the actual file, i.e. in your `static` directory. Or for now,
-you can simply remove the <link> element for the favicon file if you don't
-want one.
+Change the file extension of the linked favicon file to match the
+file extension of the file you used above.
 
 Create a home page
 ------------------
@@ -117,8 +133,19 @@ Create a home page
 Create the file `src/routes/+page.svelte`:
 
 ```svelte
-<h1>Welcome</h1>
+<h1>Home Page</h1>
 ```
+
+If you are using `adapter-static`, the create the file
+`src/routes/+layout.js`. If you're using `adapter-auto`,
+skip this step:
+
+```js
+export const prerender = true;
+```
+
+This is necessary because we're using `adapter-static` and this
+tells svelte that all pages should be pre-rendered.
 
 Test out the web site
 ---------------------
@@ -131,8 +158,16 @@ With the `-- --open` on the command line, a browser tab will automatically
 be created and displayed. While you're developing your web site, if you
 already have a browser tab open, you can just leave that off.
 
+You should try modifying your `src/routes/+page.svelte` file. For now,
+restrict yourself to entering plain HTML. You'll notice that when you
+make a change and save the file, your web page updates immediately.
+
 Set up source code management with git
 --------------------------------------
+
+Either stop the dev server for now or open a new tab in your
+shell (I use Microsoft Terminal. You can use a CMD shell, bash shell,
+or whichever shell you prefer.
 
 Create the file `.gitignore` in your root directory:
 
@@ -153,6 +188,7 @@ Create the file `.npmrc` in your root directory:
 
 ```text
 engine-strict=true
+loglevel=silent
 ```
 
 Create the file `README.md` in your root directory:
@@ -182,19 +218,15 @@ $ git commit -m "initial commit"
 $ git branch -M main
 ```
 
-Note that we're committing both the *.coffee and *.js files, even
-though the *.js files are created from the original *.coffee files.
-That's so that if a user of our project doesn't use, nor want to
-use CoffeeScript, they can still use our project's *.js files.
-
-We've also renamed the main branch to `main` instead of the default
+We've renamed the main branch to `main` instead of the default
 `master`. That's considered politically correct these days.
 
 You may also want to continue with some of the following additional steps:
 
-1. [Enable using CoffeeScript everywhere](/posts/sveltekit+coffee#top)
-2. Save your project to GitHub
-3. Publish your project to npm
-4. Enable using PostCSS
+1. [Set up global styles](/posts/sveltekit-global-styles#top)
+2. [Enable using CoffeeScript everywhere](/posts/sveltekit+coffee#top)
+3. Save your project to GitHub
+4. Publish your project to npm
+5. [Enable using PostCSS](/posts/postcss#top)
 
 

@@ -1,7 +1,7 @@
 # PlotUtils.coffee
 
 import {assert} from '@jdeighan/base-utils/exceptions'
-import {undef, defined, notdefined} from '@jdeighan/base-utils/utils'
+import {undef, defined} from '@jdeighan/base-utils'
 
 # ---------------------------------------------------------------------------
 

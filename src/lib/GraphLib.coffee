@@ -1,8 +1,6 @@
 # GraphLib.coffee
 
 import {scaleLinear} from 'd3-scale';
-import {undef, defined} from '@jdeighan/base-utils'
-import {isNumber} from '@jdeighan/base-utils/utils'
 
 # ---------------------------------------------------------------------------
 

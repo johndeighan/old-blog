@@ -1,25 +1,9 @@
 Set up CoffeeScript for SvelteKit
 =================================
 
-First, create a SvelteKit project:
-
-```bash
-$ npm create svelte@latest myapp
-$ cd myapp
-$ mkdir src/lib src/test
-$ npm install
-$ npm run dev -- --open
-```
-
-Create a Skeleton Project with no add-ons whatsoever.
-
-Change the file `src/routes/+page.svelte to:
-
-```svelte
-<h1>Hello</h1>
-```
-
-Notice that the web page updates immediately in the browser.
+First, you need a SvelteKit project. You can follow my
+[instructions for setting up SvelteKit from scratch](/posts/sveltekit-from-scratch#top)
+or you can use the standard installer [here](https://kit.svelte.dev/).
 
 Enabling CoffeeScript for SvelteKit entails 2 major changes:
 
@@ -39,61 +23,25 @@ Enabling CoffeeScript for SvelteKit entails 2 major changes:
 Step 1: Enabling `*.coffee` files
 =================================
 
-Install the coffeescript npm package globally and locally:
+Install the coffeescript npm package, and npm-run-all
+to allow running commands concurrently:
 
 ```bash
-$ npm install -g coffeescript
-$ npm install -D coffeescript
-```
-
-I believe it's also possible to only install coffeescript locally.
-Since that's not how I do it, I'm a bit afraid
-to tell you to do that since I haven't tested doing it that way.
-My best guess is that you would have to change some of the
-scripts in your `package.json` file from what I describe, possibly
-utilizing the `npx` command since your system would not have the
-`coffee` command available.
-
-To allow running 2 or more commands concurrently, install the
-`npm-run-all` package:
-
-```bash
-$ npm install -D npm-run-all
+$ npm install -D coffeescript npm-run-all
 ```
 
 Next, you should make some changes to your `package.json` file:
 
-1. The `name` should be unique in both the GitHub and npm
-	systems. The way I ensure that is to use a name like
-	`@<GitHub User Name>/<Descriptive Name>`. For example, I'm
-	using the name `@jdeighan/sveltekit-coffee`. You should,
-	of course, use your own GitHub user name - or anything else
-	that you're sure won't cause a name conflict if you try to
-	add your project to GitHub, npm or any other site you use to
-	store your source code.
-
-2. I prefer starting the version number at 1.0.0, but never
-	releasing any version that's broken. It doesn't matter if
-	the functionality is extremely limited as long as it correctly
-	does what your README.md file says that it does.
-
-3. If your `package.json` file includes the setting
-	`"private": true`, you might want to remove that if you
-	want your project to be accessible to the general public.
-	There is a license field that can be added if you want to
-	add some restrictions to the use of your project. I personally
-	add the setting `"license": "MIT",`.
-
-4. Make sure the setting `"type": "module"` is there. SvelteKit
+1. Make sure the setting `"type": "module"` is there. SvelteKit
 	normally adds it automatically. It allows you to use ES6
 	syntax, which I always do. Among other things, it allows
 	you to use ES6 import and export statements.
 
-5. Do not, under any circumstances, make any changes in sections
+2. Do not, under any circumstances, make any changes in sections
 	named `dependencies` or `devDependencies`. The `npm` command
 	manages these automatically.
 
-6. Make the following change to the `"scripts"` section:
+3. Make the following change to the `"scripts"` section:
 
 Mine, as initially set up by SvelteKit, was:
 
@@ -109,21 +57,21 @@ Change that to:
 
 ```json
 	"scripts": {
-		"coffee": "coffee --compile --watch .",
+		"coffee:watch": "npx coffee -c -w .",
 		"vite:dev": "vite dev",
-		"dev": "run-p coffee vite:dev",
-		"build": "coffee -c . && vite build",
+		"dev": "npx coffee -c . && run-p coffee:watch vite:dev",
+		"build": "npx coffee -c . && vite build",
 		"preview": "vite preview"
-	},
+		},
 ```
 
 I can't anticipate how future versions of SvelteKit might
-set up the initial `"scripts"` section, which is why I
-included my original one. If they change it, you'll need to
-use your own judgement on the needed changes. But keep in mind:
+set up the initial `"scripts"` section, which is why I included
+my original one above. If they change it, you'll need to use
+your own judgement on the needed changes. But keep in mind:
 
-1. I've added a `coffee` script to compile any `*.coffee` files
-	in the project to `*.js` files. However, I want the coffee
+1. I've added a `coffee:watch` script to compile any `*.coffee`
+	files in the project to `*.js` files. I want the coffee
 	command to keep watching for further changes, i.e. the
 	command does not terminate. That's why the `dev` command
 	needs to use the `run-p` command (added when you installed
@@ -134,7 +82,7 @@ To test things out, we're going to convert 2 config files to
 CoffeeScript files, plus create a library file containing
 utility functions that we'll utilize from our web page.
 
-The current contents of the file `vite.config.js` is:
+The standard SvelteKit `vite.config.js` file is:
 
 ```js
 import { sveltekit } from '@sveltejs/kit/vite';
@@ -157,10 +105,10 @@ export default {
 ```
 Save that as `vite.config.coffee`.
 
-The current contents of the file `svelte.config.js is:
+The SvelteKit standard `svelte.config.js is:
 
 ```js
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -174,12 +122,15 @@ export default config;
 
 NOTE: the comment containing `@type` is for TypeScript, which
 I don't use. So, I'll remove it in the CoffeeScript version.
-If you use TypeScript, you'll want to keep it.
+If you use TypeScript, you'll want to keep it. Also, if you
+followed the `SvelteKit from scratch` instructions, you will
+be using `adapter-static`. Just keep whichever adapter is
+currently set up in this file.
 
-The CoffeeScript version of that is:
+The CoffeeScript version is:
 
 ```coffee
-import adapter from '@sveltejs/adapter-auto'
+import adapter from '@sveltejs/adapter-static'
 
 export default {
 	kit: {
@@ -188,81 +139,57 @@ export default {
 	}
 ```
 
-Next, we'll add a library of utility functions. Add this file
-as `src/lib/utils.coffee`:
+Make sure it's using the adapter that you chose earlier.
+
+Save that as `svelte.config.coffee`.
+
+A few notes about CoffeeScript. It uses indentation to indicate
+program structure, so the indentation must be includes. You
+can use either TAB characters (my preference) or spaces, but
+you must be consistent. Because program struction is indicated
+by indentation (as in the Python language), no semicolons are
+required, though if you include them, it's OK. When defining
+a literal object, the curly braces are not required, but I prefer
+including them to make it clear what you're creating (without the
+curly braces, CoffeeScript knows what you're creating from the
+`<key>: <value` syntax of object properties). When defining
+a literal object, if each `<key>: <value>` pair is on a separate
+line, the commas at the end of each is also not required. Similar
+rules apply when defining literal arrays.
+
+You can now remove the `vite.config.js` and `svelte.config.js` files
+because they will be regenerated from the corresponding `*.coffee`
+files. This is not required, but we want to test that everything is
+working properly.
+
+Another thing that we'd like to test is automatic conversion of
+`*.coffee` library files to `*.js` files. This next step is not
+required, it just allows us to test this feature.
+
+Add this file as `src/lib/utils.coffee`:
 
 ```coffee
-export translate = (str, lang) =>
+export spaces = (n) =>
 
-	switch str.toLowerCase()
-		when 'hello'
-			if (lang == 'zh') then return '你好'
-			if (lang == 'es') then return 'Hola'
-			if (lang == 'hi') then return 'नमस्ते'
-		when 'what is your name', 'what is your name?'
-			if (lang == 'zh') then return '你叫什么名字？'
-			if (lang == 'es') then return '¿Cómo te llamas?'
-			if (lang == 'hi') then return 'तुम्हारा नाम क्या हे?'
-		when 'good morning'
-			if (lang == 'zh') then return '早上好'
-			if (lang == 'es') then return 'Buenos días'
-			if (lang == 'hi') then return 'शुभ प्रभात'
-		when 'good afternoon'
-			if (lang == 'zh') then return '下午好'
-			if (lang == 'es') then return 'Buenas tardes'
-			if (lang == 'hi') then return 'नमस्कार'
-		when 'good evening'
-			if (lang == 'zh') then return '晚上好'
-			if (lang == 'es') then return 'Buenas noches'
-			if (lang == 'hi') then return 'सुसंध्या'
-		when 'happy birthday'
-			if (lang == 'zh') then return '生日快乐'
-			if (lang == 'es') then return 'Feliz cumpleaños'
-			if (lang == 'hi') then return 'जन्मदिन की शुभकामनाएं'
-		when 'merry christmas'
-			if (lang == 'zh') then return '圣诞节快乐'
-			if (lang == 'es') then return 'Feliz navidad'
-			if (lang == 'hi') then return 'क्रिसमस की बधाई'
-		when 'happy new year'
-			if (lang == 'zh') then return '新年快乐'
-			if (lang == 'es') then return 'Feliz año nuevo'
-			if (lang == 'hi') then return 'नए साल की शुभकामनाएँ'
-		when 'today is my birthday'
-			if (lang == 'zh') then return '今天是我的生日'
-			if (lang == 'es') then return 'Hoy es mi cumpleaños'
-			if (lang == 'hi') then return 'आज मेरा जन्मदिन हे'
-		when 'today is christmas'
-			if (lang == 'zh') then return '今天是圣诞节'
-			if (lang == 'es') then return 'Hoy es navidad'
-			if (lang == 'hi') then return 'आज क्रिसमस है'
-		when 'today is new year\'s day'
-			if (lang == 'zh') then return '今天是元旦'
-			if (lang == 'es') then return 'Hoy es el día de año nuevo'
-			if (lang == 'hi') then return 'आज नववर्ष का दिन है'
-		when 'none of the preceding'
-			if (lang == 'zh') then return '以上都不是'
-			if (lang == 'es') then return 'Ninguno de los anteriores'
-			if (lang == 'hi') then return 'पूर्व में से कोई नहीं'
-		when 'none of the above'
-			if (lang == 'zh') then return '以上都不是'
-			if (lang == 'es') then return 'Ninguno de los anteriores'
-			if (lang == 'hi') then return 'इनमे से कोई भी नहीं'
-	return str
+	return " ".repeat(n)
+
+export centeredText = (text, width) =>
+
+	totSpaces = width - text.length
+	if (totSpaces <= 0)
+		return text
+	numLeft = Math.floor(totSpaces / 2)
+	numRight = totSpaces - numLeft
+	return spaces(numLeft) + text + spaces(numRight)
 ```
 
-This implements a simple function named `translate()` that will
-translate a few common English phrases to either Chinese or
-Spanish.
+This implements a simple function named `centeredText()` that will
+center a string within a field of a given width. We'll use it on
+our Home Page within a `<pre>` tag, since whitespace is not
+significant anywhere else in an HTML document.
 
 Test it out
 -----------
-
-Remove the files `svelte.config.js` and `vite.config.js`. They
-should be re-generated when we run our project. In general,
-it's not necessary to remove any `*.js` files - they are just
-overwritten by the CoffeeScript compiler. However, we're testing
-things out and this will allow us to easily check if they
-are created.
 
 Stop your current development server with Ctrl-C if it's
 still running. Then, re-run the development server with:
@@ -290,95 +217,52 @@ Use the utility library
 Change the file `src/routes/+page.svelte` to:
 
 ```svelte
-<div>
-	<button on:click={() => lang='en'} class:select={lang=='en'}>
-		I speak English
-	</button>
-	<button on:click={() => lang='es'} class:select={lang=='es'}>
-		Yo hablo español
-	</button>
-	<button on:click={() => lang='zh'} class:select={lang=='zh'}>
-		我说中文
-	</button>
-	<button on:click={() => lang='hi'} class:select={lang=='hi'}>
-		मैं हिंदी बोलते हैं
-	</button>
-</div>
+<h1>Home Page</h1>
 
-<div>
-	<button on:click={() => today='birthday'} class:select={today=='birthday'}>
-		{translate('Today is my birthday', lang)}
-	</button>
-	<button on:click={() => today='christmas'} class:select={today=='christmas'}>
-		{translate('Today is Christmas', lang)}
-	</button>
-	<button on:click={() => today='new year'} class:select={today=='new year'}>
-		{translate('Today is New Year\'s Day', lang)}
-	</button>
-	<button on:click={() => today=''} class:select={today==''}>
-		{translate('None of the preceding', lang)}
-	</button>
-</div>
-
-<h1>{translate('Hello', lang)}</h1>
-
-{#if hour < 12}
-	<h1>{translate('Good Morning', lang)}</h1>
-{:else if hour < 18}
-	<h1>{translate('Good Afternoon', lang)}</h1>
-{:else}
-	<h1>{translate('Good Evening', lang)}</h1>
-{/if}
-
-{#if today == 'birthday'}
-	<h1>{translate('Happy Birthday', lang)}</h1>
-{:else if today == 'christmas'}
-	<h1>{translate('Merry Christmas', lang)}</h1>
-{:else if today == 'new year'}
-	<h1>{translate('Happy New Year', lang)}</h1>
-{/if}
+<pre>
+{'='.repeat(42)}
+{centeredText('A title', 42)}
+{'='.repeat(42)}
+</pre>
 
 <script>
-	import {translate} from '$lib/utils.js';
-	lang = 'es';
-	today = '';
-	hour = new Date().getHours();
+	import {centeredText} from '$lib/utils.js';
 </script>
-
-<style>
-	button {
-		font-size: 18px;
-		padding: 3px;
-		margin: 3px;
-		background-color: lightGreen;
-		font-family: sans-serif;
-		}
-	button.select {
-		background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0 0);
-		}
-</style>
 ```
 
-Now, you've got a cool web page that supports 4 languages:
-English, Chinese, Spanish and Hindi, and greets you appropriately.
+Note the following: The code inside the `<script>` section is still
+JavaScript, not CoffeeScript. We'll fix that next. Also, note the use
+of the `$lib` alias provided by Svelte for the directory `src/lib`.
+You can find plenty of tutorials on Svelte itself, so I'm not going
+to try to teach it to you, but note that in the markup, you can put
+any JavaScript expression inside `{` and `}` and it will be interpreted
+and the result placed on the web page.
 
-Note that so far, on a *.svelte page, inside `<script>` tags,
-you must put JavaScript - not CoffeeScript. We'll fix that next.
+You should see something like this, with the words 'Home Page' in
+large, bold text:
+
+```text
+Home Page
+
+==========================================
+                 A title
+==========================================
+```
 
 Support CoffeeScript on Svelte pages
 ====================================
 
-Install my svelte/CoffeeScript preprocessor:
+Install the npm package @jdeighan/svelte-utils:
 
 ```bash
-$ npm install -D @jdeighan/svelte-preprocess
+$ npm install -D @jdeighan/svelte-utils
 ```
 
 Now, change your `svelte.config.coffee` file to:
 
 ```coffee
-import adapter from '@sveltejs/adapter-auto'
-import {coffeePreProcessor} from '@jdeighan/svelte-preprocess/coffee'
+import adapter from '@sveltejs/adapter-static'
+import {coffeePreProcessor} from '@jdeighan/svelte-utils/preprocessors'
 
 export default {
 	kit: {
@@ -389,66 +273,34 @@ export default {
 		}
 	}
 ````
+Make sure the adapter matches the adapter you're using.
 
-After this change, you will be able to change the `<script>` section
-of `src/routes/+page.svelte` to be:
+After this change, you will be able to change your
+`src/routes/+page.svelte` file to:
 
 ```svelte
+<h1>Home Page</h1>
+
+<pre>
+{'='.repeat(width)}
+{centeredText('A title', width)}
+{'='.repeat(width)}
+</pre>
+
 <script lang="coffee">
-	import {translate} from '$lib/utils.js'
-	lang = 'es'
-	today = ''
-	hour = new Date().getHours()
+	import {centeredText} from '$lib/utils.js'
+	width = 42
 </script>
 ```
 
-Deploy to the Internet
-======================
+Note that without the `lang="coffee"`, you would get an error
+message because the variable `width` is not declared. CoffeeScript
+does not require, nor allow you to declare variables.
 
-Create the file `src/routes/+layout.server.coffee`:
+Reactive statements and blocks
+------------------------------
 
-```coffee
-export prerender = true
-```
-
-Next, you have to install the "static adapter":
-
-```bash
-$ npm install -D @sveltejs/adapter-static@latest
-```
-
-Next, modify your `svelte.config.coffee` file to:
-
-```coffee
-import adapter from '@sveltejs/adapter-static'
-import {coffeePreProcessor} from '@jdeighan/svelte-preprocess/coffee'
-
-export default {
-	kit: {
-		adapter: adapter()
-		}
-	preprocess: {
-		script: coffeePreProcessor
-		}
-	}
-```
-
-Only the first line was changed. You can now build your web site
-as a set of static HTML pages with:
-
-```bash
-$ npm run build
-```
-
-This should create a directory named `build` in your project
-directory. To deploy it to the Internet, run:
-
-```bash
-$ surge ./build
-```
-
-Lastly, we'll try out creating reactive statements and
-reactive blocks. There are 2 types of reactive statements supported:
+There are 2 types of reactive statements supported:
 
 ```coffee
 $: fullName = firstName + ' ' + lastName
@@ -491,112 +343,37 @@ The reactive block consists of all following lines that are indented
 further than the initial line, except that a blank line does NOT
 terminate the block.
 
-To test this, change your `src/+page.svelte` file to:
+Test it out
+-----------
+
+Change your `src/routes/+page.svelte` file to:
 
 ```svelte
-<div>
-	<button on:click={() => lang='en'} class:select={lang=='en'}>
-		I speak English
-	</button>
-	<button on:click={() => lang='es'} class:select={lang=='es'}>
-		Yo hablo español
-	</button>
-	<button on:click={() => lang='zh'} class:select={lang=='zh'}>
-		我说中文
-	</button>
-	<button on:click={() => lang='hi'} class:select={lang=='hi'}>
-		मैं हिंदी बोलते हैं
-	</button>
-</div>
+<h1>Home Page</h1>
 
-<div>
-	<label>
-		{translate('What is your name?', lang)}
-		<input bind:value={name}>
-	</label>
-</div>
+<input type="number" min="0" bind:value={width}/>
 
-<h1>{helloMessage}{name?' ':''}{name}, {todayMessage}</h1>
+<pre>
+{'='.repeat(width)}
+{centeredText('A title', width)}
+{'='.repeat(width)}
+</pre>
 
-<div>
-	<label>
-		<input type="radio" bind:group={today} value="birthday">
-		{translate('Today is my birthday', lang)}
-	</label>
-</div>
-<div>
-	<label>
-		<input type="radio" bind:group={today} value="christmas">
-		{translate('Today is Christmas', lang)}
-	</label>
-</div>
-<div>
-	<label>
-		<input type="radio" bind:group={today} value="new year">
-		{translate('Today is New Year\'s Day', lang)}
-	</label>
-</div>
-<div>
-	<label>
-		<input type="radio" bind:group={today} value="">
-		{translate('None of the above', lang)}
-	</label>
-</div>
-
-<h1>{dateMessageEx}</h1>
+<p>{message}</p>
 
 <script lang="coffee">
-	import {translate} from '$lib/utils.js'
-	lang = 'es'
-	name = ''
-	today = ''
-	hour = new Date().getHours()
-
-	#reactive helloMessage = translate('Hello', lang)
-
-	$:
-		switch today
-			when 'birthday'
-				dateMessage = translate('Happy Birthday', lang)
-			when 'christmas'
-				dateMessage = translate('Merry Christmas', lang)
-			when 'new year'
-				dateMessage = translate('Happy New Year', lang)
-			else
-				dateMessage = ''
-
-	$: dateMessageEx = if dateMessage then dateMessage + '!' else ''
-
-	#reactive
-		if (hour < 12)
-			todayMessage = translate('Good Morning', lang)
-		else if (hour < 18)
-			todayMessage = translate('Good Afternoon', lang)
-		else
-			todayMessage = translate('Good Evening', lang)
-
+	import {centeredText} from '$lib/utils.js'
+	width = 42
+	$: message = "The width is #{width}"
 </script>
-
-<style>
-	div {
-		font-size: 18px;
-		margin: 4px;
-		}
-	button {
-		font-size: 18px;
-		padding: 3px;
-		margin: 3px;
-		background-color: lightGreen;
-		font-family: sans-serif;
-		}
-	button.select {
-		background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0 0);
-		}
-</style>
 ```
 
-This tests both types of reactive statement and both types of
-reactive block.
+You can now change the width of the `<pre>` section dynamically,
+and not only does the section itself update automatically, the message
+that's printed also updates automatically thanks to the reactive
+statement introduced by `$:`. You can try making additional changes
+to the home page, including changing the reactive statement to a
+reactive block, or replacing `$:` with `#reactive`.
 
 It did just occur to me that there is still something that I consider
 a problem. In the markup (i.e. main HTML section), within curly braces
