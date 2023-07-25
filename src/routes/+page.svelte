@@ -54,6 +54,9 @@
 <BlogPost name='favicons' label='Generate favicons'/>
 <BlogPost name='pretty-print-html' label='Pretty Print HTML/SVG'/>
 <BlogPost name='bin-files' label='Adding executable scripts to a library'/>
+<BlogPost name='parcel' label='Parcel'/>
+<BlogPost name='modernizr' label='Modernizr for feature detection'/>
+<BlogPost name='open-layers' label='OpenLayers - Open source GIS library'/>
 
 <script>
 	import BlogPost from './BlogPost.svelte'

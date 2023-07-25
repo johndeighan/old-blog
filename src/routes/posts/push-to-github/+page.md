@@ -4,13 +4,19 @@ Push project to GitHub
 1. Create a GitHub account on github.com
 2. Install the GitHub CLI
 3. `cd` to the directory containing the project
-4. Execute the following:
+4. Open a plain CMD shell (improves prompt visibility)
+4. In the CMD shell, execute the following:
 
 ```bash
 $ gh repo create
 	- select Push an existing local repository to GitHub
-	- enter the name of the directory holding the project
-	- if using bash shell, keep hitting Enter
+	- Path to local repository: enter '.' (the default)
+	- Repository name: accept default (current directory name)
+	- Description: enter a description
+	- Visibility: public
+	- Add a remote? Yes
+	- What should the new remote be called? origin
+	- Would you like to push commits from the current branch to "origin"? Yes
 ```
 
 NOTE: My bash shell fails to display most of the prompts
