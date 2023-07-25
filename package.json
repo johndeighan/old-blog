@@ -1,6 +1,6 @@
 {
 	"name": "@jdeighan/blog",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"scripts": {
 		"readme": "cp ./README.md ./src/routes/posts/how-to-build/+page.md",
 		"coffee:watch": "npx coffee -c -w .",
